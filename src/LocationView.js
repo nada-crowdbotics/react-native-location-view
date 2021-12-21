@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, Animated, Platform, UIManager, 
+import { View, StyleSheet, Animated, Platform, UIManager,
   TouchableOpacity, Text, ViewPropTypes } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -46,9 +46,6 @@ export default class LocationView extends React.Component {
 
   constructor(props) {
     super(props);
-    if (Platform.OS === 'android') {
-      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
   }
 
   componentDidMount() {
@@ -92,12 +89,10 @@ export default class LocationView extends React.Component {
 
   _onTextFocus = () => {
     this.state.inFocus = true;
-    this._animateInput();
   };
 
   _onTextBlur = () => {
     this.state.inFocus = false;
-    this._animateInput();
   };
 
   _setRegion = (region, animate = true) => {
@@ -154,7 +149,7 @@ export default class LocationView extends React.Component {
           <AutoCompleteInput
             ref={input => (this._input = input)}
             apiKey={this.props.apiKey}
-            style={[styles.input, { transform: [{ scale: inputScale }] }]}
+            style={[styles.input]}
             debounceDuration={this.props.debounceDuration}
             components={this.props.components}
           />
@@ -195,7 +190,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    width: '80%',
+    width: '100%',
     padding: 5,
   },
   currentLocBtn: {

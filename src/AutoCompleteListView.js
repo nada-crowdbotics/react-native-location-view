@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  LayoutAnimation,
   Platform,
   TouchableNativeFeedback,
 } from 'react-native';
@@ -39,10 +38,6 @@ export default class AutoCompleteListView extends React.Component {
   _onTextBlur = () => {
     this.setState({ inFocus: false });
   };
-
-  componentDidUpdate() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }
 
   _renderItem({ item }) {
     const TouchableControl = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
