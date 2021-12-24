@@ -30,7 +30,8 @@ export default class LocationView extends React.Component {
     components: PropTypes.arrayOf(PropTypes.string),
     timeout: PropTypes.number,
     maximumAge: PropTypes.number,
-    enableHighAccuracy: PropTypes.bool
+    enableHighAccuracy: PropTypes.bool,
+    getLocation: PropTypes.func,
   };
 
   static defaultProps = {
@@ -41,7 +42,7 @@ export default class LocationView extends React.Component {
     components: [],
     timeout: 15000,
     maximumAge: Infinity,
-    enableHighAccuracy: true
+    enableHighAccuracy: true,
   };
 
   constructor(props) {
@@ -109,20 +110,18 @@ export default class LocationView extends React.Component {
     });
   };
 
-  _getCurrentLocation = () => {
-    const { timeout, maximumAge, enableHighAccuracy } = this.props;
-    Geolocation.getCurrentPosition(
-      position => {
+  _getCurrentLocation = async () => {
+    if (this.props.getLocation) {
+      try {
+        const position = await this.props.getLocation();
         const { latitude, longitude } = position.coords;
         this._setRegion({latitude, longitude});
-      },
-      error => console.log(error.message),
-      {
-        enableHighAccuracy,
-        timeout,
-        maximumAge,
+      } catch (error) {
+        console.log(error)
       }
-    );
+    } else {
+      console.warn('Provide get current location');
+    }
   };
 
   render() {
